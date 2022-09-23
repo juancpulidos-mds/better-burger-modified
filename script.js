@@ -6,8 +6,7 @@
 <svg class="desktop-burger" style="vertical-align:middle;" width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M18.75 53.125V46.875H81.25V53.125H18.75ZM18.75 71.875V65.625H81.25V71.875H18.75ZM18.75 34.375V28.125H81.25V34.375H18.75Z" fill="black"/>
 </svg>
-
-    ` 
+    `;
     template.innerHTML = `
     <style>
         :host {
@@ -79,9 +78,6 @@
     </svg>
     </div>
 
-
-
-    
     `;
 
     class BetterBurger extends HTMLElement {
@@ -90,7 +86,8 @@
             self=this;
             this.attachShadow({mode:'open'})
             this.shadowRoot.appendChild(template.content.cloneNode(true));
-            this.burger = document.querySelector('a[href="/burger"]');
+            this.burger = document.querySelector('[href="/burger"]');
+            console.log(this.burger);
             this.burger.textContent='';
             this.burger.appendChild(burgerSVGTemplate.content.cloneNode(true))
             this.burgerToggle = this.shadowRoot.querySelector('.burgerToggle');
@@ -114,7 +111,7 @@
         }
 
         getBurgerLinks() {
-            var burger = document.querySelector('a[href="/burger"]');
+            var burger = document.querySelector('[href="/burger"]');
             var links = burger.nextElementSibling.querySelectorAll('a');
             return links;
         }
