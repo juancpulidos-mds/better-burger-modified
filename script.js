@@ -86,11 +86,15 @@
             self=this;
             this.attachShadow({mode:'open'})
             this.shadowRoot.appendChild(template.content.cloneNode(true));
-            this.burger = document.querySelector('[href="/burger"]');
-            console.log(this.burger);
+            
+            this.burger = document.querySelector('.folder');
+            this.links = this.burger.lastElementChild.querySelectorAll('a');
+
+            // clean burger container and add icon
             this.burger.textContent='';
-            this.burger.appendChild(burgerSVGTemplate.content.cloneNode(true))
+            this.burger.appendChild(burgerSVGTemplate.content.cloneNode(true));
             this.burgerToggle = this.shadowRoot.querySelector('.burgerToggle');
+            
             this.burger.addEventListener('click', function() {
                 console.log('the burger has been clicked')
                 self.classList.add('is-open')
@@ -108,12 +112,6 @@
                 self.resetBodyPositionWhenNotVisible();
             })
             
-        }
-
-        getBurgerLinks() {
-            var burger = document.querySelector('[href="/burger"]');
-            var links = burger.nextElementSibling.querySelectorAll('a');
-            return links;
         }
 
         preventBodyScrollWhenVisible() {
@@ -152,17 +150,12 @@
               })
          }
 
-
-
         connectedCallback() {
-            this.getBurgerLinks();
-            // console.log(overlay)
-            this.getBurgerLinks().forEach(link => {
+            this.links.forEach(link => {
               	link.classList.add('header-nav-item');
               	link.style.fontSize = '4vmin'
                 this.appendChild(link)
             })
-
         }
     }
     window.customElements.define('better-burger', BetterBurger)
