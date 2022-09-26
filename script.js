@@ -87,7 +87,6 @@
             this.attachShadow({mode:'open'})
             this.shadowRoot.appendChild(template.content.cloneNode(true));
             this.burger = self.getBurgerMenu();
-            console.log('this.burger', this.burger);
             this.links = this.burger.lastElementChild.querySelectorAll('a');
 
             // clean burger container and add icon
@@ -96,7 +95,6 @@
             this.burgerToggle = this.shadowRoot.querySelector('.burgerToggle');
             
             this.burger.addEventListener('click', function() {
-                console.log('the burger has been clicked')
                 self.classList.add('is-open')
               setTimeout(function() {
                   self.animateLinks();
@@ -131,7 +129,6 @@
         getBurgerMenu() {
           // if there are more tha two items, then we need to determine the burguer item
           const folders = Array.from(document.querySelectorAll('.nav-item.folder'));
-          console.log('folders: ', folders);
           return folders.filter(el => el.textContent.includes('/burger'))[0];
         }
 
