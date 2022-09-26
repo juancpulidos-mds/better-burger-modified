@@ -86,8 +86,7 @@
             self=this;
             this.attachShadow({mode:'open'})
             this.shadowRoot.appendChild(template.content.cloneNode(true));
-            
-            this.burger = document.querySelector('.folder');
+            this.burger = self.getBurgerMenu();
             this.links = this.burger.lastElementChild.querySelectorAll('a');
 
             // clean burger container and add icon
@@ -126,6 +125,12 @@
             document.body.style.position = '';
             document.body.style.top = '';
             window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        }
+
+        getBurgerMenu() {
+          // if there are more tha two items, then we need to determine the burguer item
+          const folders = Array.from(document.querySelectorAll('.folder'));
+          return folders.filter(el => el.textContent.includes('/burger'))[0];
         }
 
         animateLinks() {
