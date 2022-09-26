@@ -87,6 +87,7 @@
             this.attachShadow({mode:'open'})
             this.shadowRoot.appendChild(template.content.cloneNode(true));
             this.burger = self.getBurgerMenu();
+            console.log('this.burger', this.burger);
             this.links = this.burger.lastElementChild.querySelectorAll('a');
 
             // clean burger container and add icon
