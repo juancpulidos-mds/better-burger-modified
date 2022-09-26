@@ -130,7 +130,7 @@
 
         getBurgerMenu() {
           // if there are more tha two items, then we need to determine the burguer item
-          const folders = Array.from(document.querySelectorAll('.folder'));
+          const folders = Array.from(document.querySelectorAll('.nav-item.folder'));
           console.log('folders: ', folders);
           return folders.filter(el => el.textContent.includes('/burger'))[0];
         }
