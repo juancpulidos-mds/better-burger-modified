@@ -25,6 +25,7 @@
             align-items: center;
             z-index:10000;  
             font-family: inherit;
+            box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.2);
             transform: translate(100%,0%);
             transition: all 0.6s cubic-bezier(0.85, 0, 0.15, 1);
         }    
@@ -43,7 +44,7 @@
     .burgerOverlay {
         position: fixed;
         top: 0;
-        left: 0;
+        right: 0;
         width: 100%;
         height: 100vh;
         display: flex;
@@ -66,10 +67,27 @@
         cursor: pointer;
     }
 
+    @media (min-width: 768px) {
+      :host {
+        width: 40%;
+      }
+
+      .burgerOverlay {
+        width: 40%;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      :host {
+        width: 25%;
+      }
+
+      .burgerOverlay {
+        width: 25%;
+      }
+    }
 
     </style>
-    
-
 
     <slot></slot>
     <div part="burgerToggle" class="burgerToggle"><svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
