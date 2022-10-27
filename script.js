@@ -106,6 +106,7 @@
             this.shadowRoot.appendChild(template.content.cloneNode(true));
             this.burger = self.getBurgerMenu();
             this.links = this.burger.lastElementChild.querySelectorAll('a');
+            this.active = 0;
 
             // clean burger container and add icon
             this.burger.textContent='';
@@ -174,7 +175,8 @@
 
         connectedCallback() {
             this.links.forEach(link => {
-              	link.classList.add('header-nav-item');
+                const myClass = link.href.includes(window.location.pathname) ? 'header-nav-item active' : 'header-nav-item';
+              	link.classList.add(myClass);
               	link.style.fontSize = '4vmin'
                 this.appendChild(link)
             })

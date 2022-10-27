@@ -2,7 +2,7 @@
 .header-nav-item {
   font-size: 4vmin;
   opacity: 0;
-  padding: .8rem;
+  padding: 1.2rem .8rem;
   text-decoration: none;
   color: #081b33;
   font-weight: 700;
@@ -13,8 +13,10 @@
   transition: left 0ms linear 100ms;
 }
 
-.header-nav-item:hover {
-  color: #081b33;
+.header-nav-item:hover,
+.header-nav-item:active,
+.header-nav-item.active {
+  color: #07a8f2;
 }
 
 /* This will hide the desktop burger on mobile devices*/
