@@ -1,6 +1,6 @@
 (function(){
-    var template = document.createElement('template');
-    var burgerSVGTemplate =  document.createElement('template');
+    const template = document.createElement('template');
+    const burgerSVGTemplate =  document.createElement('template');
 
     burgerSVGTemplate.innerHTML = `
 <svg class="desktop-burger" style="vertical-align:middle;" width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +106,8 @@
             this.shadowRoot.appendChild(template.content.cloneNode(true));
             this.burger = self.getBurgerMenu();
             this.links = this.burger.lastElementChild.querySelectorAll('a');
-            this.active = 0;
+
+            console.log('this.links', this.links);
 
             // clean burger container and add icon
             this.burger.textContent='';
@@ -128,6 +129,11 @@
                 self.classList.remove('is-open')
                 self.resetBodyPositionWhenNotVisible();
             })
+
+            setTimeout(function() {
+              self.setLinks();
+            },1000)
+
             
         }
 
@@ -152,7 +158,7 @@
         }
 
         animateLinks() {
-            var links = this.querySelectorAll('a');
+            const links = this.querySelectorAll('a');
             links.forEach((link, index) => {
                 link.style.opacity = "0";
                 link.animate(
@@ -173,14 +179,19 @@
               })
          }
 
-        connectedCallback() {
-            this.links.forEach(link => {
-                const myClass = link.href.includes(window.location.pathname) ? 'header-nav-item active' : 'header-nav-item';
-              	link.classList.add(myClass);
-              	link.style.fontSize = '4vmin'
-                this.appendChild(link)
-            })
-        }
+         setLinks() {
+          this.links.forEach(link => {
+            const pathname = window.location.pathname;
+            const myClass = pathname.includes(link.href) ? 'header-nav-item active' : 'header-nav-item';
+            link.classList.add(myClass);
+            link.style.fontSize = '4vmin'
+            this.appendChild(link)
+          })
+         }
+
+        // connectedCallback() {
+        //   this.setLinks();
+        // }
     }
     window.customElements.define('better-burger', BetterBurger)
 })();
