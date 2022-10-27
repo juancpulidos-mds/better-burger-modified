@@ -182,7 +182,7 @@
          setLinks() {
           this.links.forEach(link => {
             const pathname = window.location.pathname;
-            const myClass = pathname.includes(link.href) ? 'header-nav-item active' : 'header-nav-item';
+            const myClass = pathname.includes(link.href) ? 'header-nav-item-active' : 'header-nav-item';
             link.classList.add(myClass);
             link.style.fontSize = '4vmin'
             this.appendChild(link)

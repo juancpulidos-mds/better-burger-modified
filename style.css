@@ -1,5 +1,6 @@
 /* Custom css to new burger menu */
-.header-nav-item {
+.header-nav-item,
+.header-nav-item-active {
   font-size: 4vmin;
   opacity: 0;
   padding: 1.2rem .8rem;
@@ -15,7 +16,7 @@
 
 .header-nav-item:hover,
 .header-nav-item:active,
-.header-nav-item.active {
+.header-nav-item-active {
   color: #07a8f2;
 }
 
