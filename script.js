@@ -9,39 +9,9 @@
     `;
     template.innerHTML = `
     <style>
-        :host {
-            display: block;
-            visibility: hidden;
-            position: fixed;
-            /* Update */
-            background: white;
-            top: 0;
-            right:0;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index:10000;  
-            font-family: inherit;
-            box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.2);
-            transform: translate(100%,0%);
-            transition: all 0.6s cubic-bezier(0.85, 0, 0.15, 1);
-        }    
-
-        :host(.is-open) {
-            visibility:visible;
-            transform: translate(0%,0%);
-        }
-		
-        ::slotted(*) {
-            font-family: inherit;
-			opacity: 0;
-        }
-    
-    
-    .burgerOverlay {
+      :host {
+        display: block;
+        visibility: hidden;
         position: fixed;
         top: 0;
         right: 0;
@@ -51,104 +21,149 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        z-index:10000;
-    }
-
-    .burgerToggle {
-        position: absolute;
-        top: 48px;
-        right: 48px;
-    }
-
-    .burgerToggle svg {
-        width: 32px;
-        height: 32px;
-        vertical-align:middle;
-        cursor: pointer;
-    }
-
-    @media (min-width: 768px) {
-      :host {
-        width: 40%;
+        z-index:9999;
+        background-color: rgba(0,0,0,0.5);
       }
 
-      .burgerOverlay {
-        width: 40%;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      :host {
-        width: 25%;
+      :host(.is-open) {
+        visibility:visible;
       }
 
-      .burgerOverlay {
-        width: 25%;
+      :host(.is-open) .wrapper {
+        visibility:visible;
+        transform: translate(0%,0%);
       }
-    }
+
+      .wrapper {
+        display: block;
+        visibility: hidden;
+        position: fixed;
+        /* Update */
+        background: white;
+        top: 0;
+        right:0;
+        width: 280px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        z-index:10000;  
+        font-family: inherit;
+        box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.2);
+        transform: translate(100%,0%);
+        transition: all 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+        padding: 60px 0 100px 50px;
+      }
+  
+      ::slotted(*) {
+        font-family: inherit;
+        opacity: 0;
+      }
+    
+      .burgerToggle {
+          position: absolute;
+          top: 28px;
+          right: 28px;
+          z-index:10001;
+      }
+
+      .burgerToggle svg {
+          width: 32px;
+          height: 32px;
+          vertical-align:middle;
+          cursor: pointer;
+      }
+
+      /* Custom css to new burger menu */
+      .header-nav-item,
+      .header-nav-item-active {
+        font-size: 1.6rem;
+        opacity: 0;
+        padding: 1.0rem .8rem;
+        text-decoration: none;
+        color: #081b33;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: .08em;
+        line-height: 1.6rem;
+        transition: left 0ms linear 100ms;
+      }
+
+      .header-nav-item:active,
+      .header-nav-item-active {
+        color: #07a8f2;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .header-nav-item:hover {
+        color: #07a8f2;
+        text-decoration: none;
+      }
+
+      @media (min-width: 768px) {
+        .wrapper {
+          width: 280px;
+          padding-top: 100px;
+        }
+        .header-nav-item,
+        .header-nav-item-active {
+          font-size: 2.0rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .wrapper {
+          width: 300px;
+        }
+      }
+
+      @media (orientation: landscape) and (max-width: 920px) {
+        .wrapper {
+          padding-top: 60px;
+        }
+        .header-nav-item,
+        .header-nav-item-active {
+          font-size: 1.6rem;
+          padding: 0.3rem .8rem;
+        }
+      }
 
     </style>
-
     <slot></slot>
+    <div class="wrapper"></div>
     <div part="burgerToggle" class="burgerToggle"><svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M25.6939 30.1128L30.1133 25.6934L74.3075 69.8875L69.888 74.3069L25.6939 30.1128Z" fill="black"/>
     <path d="M30.1108 74.3071L25.6914 69.8877L69.8856 25.6935L74.305 30.1129L30.1108 74.3071Z" fill="black"/>
     </svg>
     </div>
-
     `;
-
     class BetterBurger extends HTMLElement {
         constructor() {
             super()
             self=this;
             this.attachShadow({mode:'open'})
             this.shadowRoot.appendChild(template.content.cloneNode(true));
+            this.wrapper = this.shadowRoot.querySelector('.wrapper');
             this.burger = self.getBurgerMenu();
             this.links = this.burger.lastElementChild.querySelectorAll('a');
-
-            console.log('this.links', this.links);
 
             // clean burger container and add icon
             this.burger.textContent='';
             this.burger.appendChild(burgerSVGTemplate.content.cloneNode(true));
             this.burgerToggle = this.shadowRoot.querySelector('.burgerToggle');
-            
+
             this.burger.addEventListener('click', function() {
                 self.classList.add('is-open')
               setTimeout(function() {
                   self.animateLinks();
               },200)
-               	setTimeout(function(){
-                self.preventBodyScrollWhenVisible();
-                },1000)
-
             });
 
             this.burgerToggle.addEventListener('click', function() {
                 self.classList.remove('is-open')
-                self.resetBodyPositionWhenNotVisible();
             })
-
-            setTimeout(function() {
-              self.setLinks();
-            },1000)
-
-            
-        }
-
-        preventBodyScrollWhenVisible() {
-            // When the overlay is shown, we want a fixed body
-            document.body.style.position = 'fixed';
-            document.body.style.top = `-${window.scrollY}px`;
-        }
-
-        resetBodyPositionWhenNotVisible() {
-            // When the modal is hidden...
-            const scrollY = document.body.style.top;
-            document.body.style.position = '';
-            document.body.style.top = '';
-            window.scrollTo(0, parseInt(scrollY || '0') * -1);
         }
 
         getBurgerMenu() {
@@ -158,7 +173,7 @@
         }
 
         animateLinks() {
-            const links = this.querySelectorAll('a');
+            const links = this.wrapper.querySelectorAll('a');
             links.forEach((link, index) => {
                 link.style.opacity = "0";
                 link.animate(
@@ -182,16 +197,15 @@
          setLinks() {
           this.links.forEach(link => {
             const pathname = window.location.pathname;
-            const myClass = pathname.includes(link.href) ? 'header-nav-item-active' : 'header-nav-item';
+            const myClass = pathname.includes(link.getAttribute('href')) ? 'header-nav-item-active' : 'header-nav-item';
             link.classList.add(myClass);
-            link.style.fontSize = '4vmin'
-            this.appendChild(link)
+            this.wrapper.appendChild(link);
           })
          }
 
-        // connectedCallback() {
-        //   this.setLinks();
-        // }
+        connectedCallback() {
+          this.setLinks();
+        }
     }
     window.customElements.define('better-burger', BetterBurger)
 })();

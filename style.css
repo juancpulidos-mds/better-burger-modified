@@ -1,23 +1,32 @@
+body {
+  background-color: bisque;
+}
+
 /* Custom css to new burger menu */
 .header-nav-item,
 .header-nav-item-active {
-  font-size: 4vmin;
+  font-size: 1.6rem;
   opacity: 0;
-  padding: 1.2rem .8rem;
+  padding: 1.0rem .8rem;
   text-decoration: none;
   color: #081b33;
-  font-weight: 700;
+  font-weight: 400;
   font-style: normal;
   letter-spacing: .08em;
   line-height: 1.6rem;
-  text-transform: uppercase;
   transition: left 0ms linear 100ms;
 }
 
-.header-nav-item:hover,
 .header-nav-item:active,
 .header-nav-item-active {
   color: #07a8f2;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.header-nav-item:hover {
+  color: #07a8f2;
+  text-decoration: none;
 }
 
 /* This will hide the desktop burger on mobile devices*/
@@ -25,13 +34,26 @@
   .primary-nav-wrapper {
     display: none;
   }
-  .header-nav-item {
-    font-size: 3vmin !important;
-  }
 }
 
 @media (max-width: 767px) {
   .mobile-secondary-nav-links .folder {
     display:none;
   }
+}
+
+@media (orientation: landscape) and (max-width: 920px) {
+  .header-nav-item,
+  .header-nav-item-active {
+    font-size: 1.6rem;
+    padding: 0.3rem .8rem;
+  }
+}
+
+.site-outer-padding-large .site-header {
+    padding-right: 2vw;
+}
+
+.mobile-primary-nav-links {
+  text-transform: inherit;
 }
