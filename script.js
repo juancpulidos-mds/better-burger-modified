@@ -1,10 +1,11 @@
 (function(){
+    const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const template = document.createElement('template');
     const burgerSVGTemplate =  document.createElement('template');
 
     burgerSVGTemplate.innerHTML = `
 <svg class="desktop-burger" style="vertical-align:middle;" width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M18.75 53.125V46.875H81.25V53.125H18.75ZM18.75 71.875V65.625H81.25V71.875H18.75ZM18.75 34.375V28.125H81.25V34.375H18.75Z" fill="black"/>
+    <path d="M18.75 53.125V46.875H81.25V53.125H18.75ZM18.75 71.875V65.625H81.25V71.875H18.75ZM18.75 34.375V28.125H81.25V34.375H18.75Z" fill="#07a8f2"/>
 </svg>
     `;
     template.innerHTML = `
@@ -22,7 +23,7 @@
         justify-content: center;
         align-items: center;
         z-index:9999;
-        background-color: rgba(0,0,0,0.5);
+        background-color: rgba(255,255,255,0.5);
       }
 
       :host(.is-open) {
@@ -32,6 +33,10 @@
       :host(.is-open) .wrapper {
         visibility:visible;
         transform: translate(0%,0%);
+      }
+
+      :host(.is-open) .burgerToggle {
+        opacity: 1;
       }
 
       .wrapper {
@@ -66,6 +71,9 @@
           top: 28px;
           right: 28px;
           z-index:10001;
+          opacity: 0;
+          transition: opacity 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+
       }
 
       .burgerToggle svg {
@@ -102,6 +110,11 @@
         text-decoration: none;
       }
 
+      .header-nav-item-mobile {
+        font-size: 1.4rem !important;
+        padding: .3rem .8rem !important;
+      }
+
       @media (min-width: 768px) {
         .wrapper {
           width: 280px;
@@ -119,14 +132,16 @@
         }
       }
 
-      @media (orientation: landscape) and (max-width: 920px) {
+      @media (orientation: landscape) {
         .wrapper {
           padding-top: 60px;
         }
-        .header-nav-item,
-        .header-nav-item-active {
-          font-size: 1.6rem;
-          padding: 0.3rem .8rem;
+      }
+
+      @media (orientation: portrait) {
+        :host {
+          display: none;
+          visibility: hidden;
         }
       }
 
@@ -134,8 +149,8 @@
     <slot></slot>
     <div class="wrapper"></div>
     <div part="burgerToggle" class="burgerToggle"><svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M25.6939 30.1128L30.1133 25.6934L74.3075 69.8875L69.888 74.3069L25.6939 30.1128Z" fill="black"/>
-    <path d="M30.1108 74.3071L25.6914 69.8877L69.8856 25.6935L74.305 30.1129L30.1108 74.3071Z" fill="black"/>
+    <path d="M25.6939 30.1128L30.1133 25.6934L74.3075 69.8875L69.888 74.3069L25.6939 30.1128Z" fill="DimGray"/>
+    <path d="M30.1108 74.3071L25.6914 69.8877L69.8856 25.6935L74.305 30.1129L30.1108 74.3071Z" fill="DimGray"/>
     </svg>
     </div>
     `;
@@ -155,15 +170,15 @@
             this.burgerToggle = this.shadowRoot.querySelector('.burgerToggle');
 
             this.burger.addEventListener('click', function() {
-                self.classList.add('is-open')
+                self.classList.add('is-open');
               setTimeout(function() {
                   self.animateLinks();
-              },200)
+              },120)
             });
 
             this.burgerToggle.addEventListener('click', function() {
-                self.classList.remove('is-open')
-            })
+                self.classList.remove('is-open');
+            });
         }
 
         getBurgerMenu() {
@@ -192,13 +207,17 @@
                   }
                 );
               })
-         }
+         };
 
          setLinks() {
           this.links.forEach(link => {
             const pathname = window.location.pathname;
-            const myClass = pathname.includes(link.getAttribute('href')) ? 'header-nav-item-active' : 'header-nav-item';
+            const exactHref = [link.getAttribute('href')];
+            const myClass = exactHref.includes(pathname) ? 'header-nav-item-active' : 'header-nav-item';
             link.classList.add(myClass);
+            if (isMobile()) {
+              link.classList.add('header-nav-item-mobile');
+            }
             this.wrapper.appendChild(link);
           })
          }

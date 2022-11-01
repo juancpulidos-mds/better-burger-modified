@@ -30,30 +30,46 @@ body {
 }
 
 /* This will hide the desktop burger on mobile devices*/
+@media (orientation: landscape) {
+  .site-container {
+    margin-top: 0 !important;
+  }
+}
+
 @media (min-width: 768px) {
   .primary-nav-wrapper {
     display: none;
   }
 }
-
 @media (max-width: 767px) {
   .mobile-secondary-nav-links .folder {
     display:none;
   }
 }
-
-@media (orientation: landscape) and (max-width: 920px) {
-  .header-nav-item,
-  .header-nav-item-active {
-    font-size: 1.6rem;
-    padding: 0.3rem .8rem;
-  }
-}
-
 .site-outer-padding-large .site-header {
     padding-right: 2vw;
 }
 
 .mobile-primary-nav-links {
   text-transform: inherit;
+}
+
+@media only screen and (max-width: 768px) {
+  .mobile-bar-wrapper {
+    flex-direction: row-reverse;
+  }
+  .mobile-nav-toggle-label .Icon--hamburger {
+    stroke: #07a8f2;
+	}
+  .mobile-primary-nav-links .folder-link a {
+    font-weight: 400;
+    font-size: 1.6rem;
+  }
+  .mobile-primary-nav-links .folder-link.active .nav-item-page,
+  .mobile-primary-nav-links .folder-link .nav-item-page:hover {
+    color: #07a8f2;
+  }
+  .mobile-primary-nav-links .folder-link.active .nav-item-page {
+    font-weight: 700;
+  }
 }
