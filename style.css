@@ -77,8 +77,41 @@ body {
 /* Here styles to News table */
 .filter-section {
   display: flex;
-  gap: 30px;
-  height: 30px;
-  margin: 20px 30px;
-  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 10px 20px 0;
+  align-items: start;
+}
+
+.filter-section select {
+  border: 2px solid #000;
+  border-radius: 0;
+  height: 42px;
+  padding: 6px 12px;
+  min-width: 180px;
+}
+
+.filter-section select:focus,
+.filter-section select:focus-visible {
+  border: 2px solid #8a8a8a;
+}
+.title-section {
+  width: 22rem;
+  height: 40px;
+}
+table.styled-table td { 
+  color: #000;
+}
+table.styled-table td:nth-child(1) { 
+  min-width: 80px;
+}
+
+@media (min-width: 768px) {
+  .filter-section {
+  	flex-direction: row;
+  	gap: 20px;
+  	height: 30px;
+  	margin: 0 10px 20px 0;
+    align-items: start;
+  }
 }
