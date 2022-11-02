@@ -73,3 +73,12 @@ body {
     font-weight: 700;
   }
 }
+
+/* Here styles to News table */
+.filter-section {
+  display: flex;
+  gap: 30px;
+  height: 30px;
+  margin: 20px 30px;
+  align-items: center;
+}
