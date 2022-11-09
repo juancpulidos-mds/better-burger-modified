@@ -7,11 +7,11 @@
   const rows = document.getElementById('tableNews').querySelector('tbody').querySelectorAll('tr');
 
   const companies = [];
-  const years = [];
+  //const years = [];
   
   // rows.forEach(row => {
-  //   const date = row.children[0].textContent;
-  //   const company = row.children[1].textContent;
+    //   const date = row.children[0].textContent;
+    //   const company = row.children[1].textContent;
 
   //   if (!companies.includes(company)) {
   //     companies.push(company);
@@ -54,7 +54,7 @@
  selectCompanies.addEventListener('change', e => {
   const { value } = e.target;
   if (!value) return;
-  newsTitleFilter.innerText = value === ALL ? TITLE_ALL : value;
+  newsTitleFilter.innerText = value === ALL ? TITLE_ALL : `${value} News`;
 
   rows.forEach(row => {
     const company = row.getAttribute('data-company');
