@@ -73,7 +73,7 @@
           z-index:10001;
           opacity: 0;
           transition: opacity 0.8s cubic-bezier(0.85, 0, 0.15, 1);
-
+          cursor: pointer;
       }
 
       .burgerToggle svg {
@@ -91,7 +91,7 @@
         padding: 1.0rem .8rem;
         text-decoration: none;
         color: #081b33;
-        font-weight: 400;
+        font-weight: 600;
         font-style: normal;
         letter-spacing: .08em;
         line-height: 1.6rem;
@@ -122,7 +122,7 @@
         }
         .header-nav-item,
         .header-nav-item-active {
-          font-size: 2.0rem;
+          font-size: 1.8rem;
         }
       }
 
