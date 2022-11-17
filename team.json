@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Name Worker",
+    "urlImage": "https...",
+    "urlSite": "https....",
+    "position": "CEO",
+    "description": "...",
+    "location": "HOME BASE",
+    "headquarter": "...",
+    "social": [
+      {
+        "urlLogo": ".",
+        "urlName": "."
+      }
+    ]
+  }
+]

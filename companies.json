@@ -1,0 +1,21 @@
+[
+  {
+    "name": "My Company",
+    "urlLogo": "https...",
+    "urlSite": "https....",
+    "headquarter": "San Diego, CA",
+    "description": "...",
+    "details": {
+        "sector": "...",
+        "partnered": "...",
+        "sgvInvestments": "...",
+        "currentStage": "..."
+    },
+    "social": [
+      {
+        "urlLogo": ".",
+        "urlName": "."
+      }
+    ]
+  }
+]
