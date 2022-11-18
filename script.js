@@ -96,6 +96,7 @@
         letter-spacing: .08em;
         line-height: 1.6rem;
         transition: left 0ms linear 100ms;
+        text-transform: uppercase;
       }
 
       .header-nav-item:active,
