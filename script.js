@@ -139,7 +139,7 @@
         }
       }
 
-      @media (orientation: portrait) {
+      @media (orientation: portrait and max-width: 767px) {
         :host {
           display: none;
           visibility: hidden;

@@ -1,47 +1,89 @@
-const companies = [
-  {
-    name: 'My Company',
-    urlLogo: 'https...',
-    urlSite: 'https....',
-    headquarter: 'San Diego, CA',
-    description: '...',
-    details: {
-        sector: '...',
-        partnered: '...',
-        sgvInvestments: '...',
-        currentStage: '...',
-    },
-    social: [
-      {
-        urlLogo: '.',
-        urlName: '.',
-      }
-    ]
-  }
-]
-
 (function(){
-  const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    const template = document.createElement('template');
-    const closeSVGTemplate =  document.createElement('template');
+    const companiesProcess = () => {
+      const templateClose = document.createElement('template');
+      const templateHeader = document.createElement('template');
 
-    closeSVGTemplate.innerHTML = `
-      <svg class='desktop-burger' style='vertical-align:middle;' width='32' height='32' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'>
-          <path d='M18.75 53.125V46.875H81.25V53.125H18.75ZM18.75 71.875V65.625H81.25V71.875H18.75ZM18.75 34.375V28.125H81.25V34.375H18.75Z' fill='#07a8f2'/>
-      </svg>
-    `;
+      templateClose.innerHTML = `<div id="closeCompany" class="company__close">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25.6939 30.1128L30.1133 25.6934L74.3075 69.8875L69.888 74.3069L25.6939 30.1128Z" fill="DimGray"/>
+            <path d="M30.1108 74.3071L25.6914 69.8877L69.8856 25.6935L74.305 30.1129L30.1108 74.3071Z" fill="DimGray"/>
+          </svg>
+        </div>`;
 
-    template.innerHTML = `
-      <styless></styles>
-    `;
-
-    class Companies extends HTMLElement {
-      constructor() {
-        super();
-        self=this;
-        this.attachShadow({mode:'open'})
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
-
+      const createHeader = (data) => {
+        return `<div>
+            <img src="${data.src}"/>
+          </div>
+          <div>
+            <h2>${data.name}</h2>
+            <a href="${data.href}" target="_blank">${data.domain}</a>
+          </div>`;
       }
-    }
+
+      const companies = Array.from(document.getElementById('contentCompanies').querySelectorAll('article'));
+      const idsCompanies = companies.map(company => company.id);
+
+      const lightbox = document.createElement('div');
+      lightbox.id = 'lightBox';
+      lightbox.appendChild(templateClose.content.cloneNode(true));
+      document.body.appendChild(lightbox);
+
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('company');
+      lightbox.appendChild(wrapper);
+
+      const companiesGallery = Array.from(document.querySelectorAll('.sqs-gallery-design-grid-slide'));
+      
+      companiesGallery.forEach(company => {
+        const link = company.querySelector('a');
+        const logo = link.querySelector('img');
+        
+        link.addEventListener('click', event => {
+          event.preventDefault();
+          const href = link.getAttribute('href');
+          const domain = (new URL(href));
+          const nakedDomain = domain.hostname.replace('www.', '');
+          const id = nakedDomain.split('.')[0];
+          const companyIndex = idsCompanies.indexOf(id);
+          
+          // if exist a ID with equal data in popups then open this else return link
+          if (companyIndex !== -1) {  
+            const data = {};
+            data.href = href;
+            data.src = logo.src;
+            data.name = logo.alt;
+            data.domain = domain.hostname;
+
+            templateHeader.innerHTML = createHeader(data);
+
+            const article = companies[companyIndex];
+            const articleHeader = article.querySelector('header');
+
+            while(articleHeader.firstChild) {
+              articleHeader.removeChild(articleHeader.firstChild);
+            }
+
+            articleHeader.appendChild(templateHeader.content.cloneNode(true));
+
+            while (wrapper.firstChild) {
+              wrapper.removeChild(wrapper.firstChild)
+            }
+
+            wrapper.appendChild(article);
+
+            lightbox.classList.add('is-open');
+            return false;
+          }
+          return true;
+        });
+      });
+
+      const closeCompany = lightbox.querySelector('.company__close');
+      closeCompany.addEventListener('click', () => {
+        lightbox.classList.remove('is-open');
+      });
+    };
+
+    companiesProcess();
+
 })();
