@@ -132,10 +132,10 @@ table.styled-table td:nth-child(1) {
 }
 
 /* Here styles to companies */
-/* #contentCompanies {
+#contentCompanies {
   display: none;
   visibility: hidden;
-} */
+}
 
 #lightBox {
   display: block;
@@ -157,22 +157,30 @@ table.styled-table td:nth-child(1) {
   visibility:visible;
 }
 
-#lightBox.is-open .company {
+#lightBox.is-open .company,
+#lightBox.is-open .about {
   visibility:visible;
   transform: translate(0%,0%);
 }
 
-#lightBox.is-open .company__close {
+@media screen and (max-width: 767px) {
+  #lightBox.is-open .company,
+  #lightBox.is-open .about {
+    width: calc(100% - 50px);
+  }
+}
+
+#lightBox.is-open .lightbox__close {
   opacity: 1;
 }
 
-.company {
+.company,
+.about {
   visibility: hidden;
   position: fixed;
   background: white;
   top: 0;
   right: 0;
-  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -184,18 +192,24 @@ table.styled-table td:nth-child(1) {
   transform: translate(100%,0%);
   transition: all 0.6s cubic-bezier(0.85, 0, 0.15, 1);
   padding: 60px 30px 100px 20px;
+  overflow-y: auto;
 }
 
 @media screen and (min-width: 768px) {
-  #lightBox.is-open .company {
-    visibility:visible;
-    transform: translate(100%,0%);
-    right: calc(60% + 60px);
-  }
-
-  .company {
+  .company,
+  .about {
     left: auto;
     width: 60%;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .company,
+  .about {
+    left: auto;
+    width: 40%;
   }
 }
 
@@ -214,6 +228,9 @@ table.styled-table td:nth-child(1) {
   margin: 0;
   font-size: 1.05rem;
   font-weight: 400;
+  font-family: futura-pt;
+  padding: 0;
+  line-height: 1.1em;
 }
 
 .company header a {
@@ -222,20 +239,34 @@ table.styled-table td:nth-child(1) {
 }
 
 .company__sub-header {
-  padding: 20px;
+  padding: 20px 10px;
 }
 
 .company__sub-header ul {
   display: flex;
-    flex-direction: row;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 30px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .company__sub-header ul li {
   font-size: 0.8rem;
+  width: 100%;
+  max-width: 50%;
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .company__sub-header ul {
+    gap: 30px;
+  }
+
+  .company__sub-header ul li {
+    width: inherit;
+    max-width: 25%;
+  }
 }
 
 .company__sub-header ul li span {
@@ -243,7 +274,7 @@ table.styled-table td:nth-child(1) {
 }
 
 .company p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   line-height: 1.1rem;
   text-align: justify;
   margin-left: 20px;
@@ -253,28 +284,67 @@ table.styled-table td:nth-child(1) {
   margin-left: 20px;
   padding-top: 30px;
   display: flex;
+  align-items: center;
   gap: 20px;
 }
 
 .company footer address {
-  font-size: 0.8rem;
+  font-size: 0.92rem;
   font-style: normal;
 }
 
-.company__close {
+.lightbox__close {
   position: absolute;
   top: 46px;
   right: 40px;
   z-index:1001;
   opacity: 0;
   transition: opacity 0.8s cubic-bezier(0.85, 0, 0.15, 1);
-
 }
 
-.company__close svg {
+.lightbox__close svg {
   width: 30px;
   height: 30px;
   vertical-align:middle;
   cursor: pointer;
 }
 
+.about header {
+  display: flex;
+  gap: 20px;
+}
+
+.about header .photo {
+  width: 160px;
+  height: auto;
+}
+
+.about header .photo img {
+  width: 100%;
+}
+
+.about header .social {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.about header .social strong {
+  font-weight: 600;
+}
+
+.icon-linked-in {
+  width: 30px;
+  height: 30px;
+}
+
+@media screen and (min-width: 768px) {
+  .about header {
+    gap: 40px;
+  }
+
+  .about header .photo {
+    width: 220px;
+  }
+}

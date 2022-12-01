@@ -3,7 +3,7 @@
       const templateClose = document.createElement('template');
       const templateHeader = document.createElement('template');
 
-      templateClose.innerHTML = `<div id="closeCompany" class="company__close">
+      templateClose.innerHTML = `<div id="closeCompany" class="lightbox__close">
           <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M25.6939 30.1128L30.1133 25.6934L74.3075 69.8875L69.888 74.3069L25.6939 30.1128Z" fill="DimGray"/>
             <path d="M30.1108 74.3071L25.6914 69.8877L69.8856 25.6935L74.305 30.1129L30.1108 74.3071Z" fill="DimGray"/>
@@ -32,7 +32,8 @@
       wrapper.classList.add('company');
       lightbox.appendChild(wrapper);
 
-      const companiesGallery = Array.from(document.querySelectorAll('.sqs-gallery-design-grid-slide'));
+      const companiesGallery = Array.from(document.querySelectorAll('.slide'));
+      console.log('companiesGallery', companiesGallery);
       
       companiesGallery.forEach(company => {
         const link = company.querySelector('a');
@@ -45,6 +46,8 @@
           const nakedDomain = domain.hostname.replace('www.', '');
           const id = nakedDomain.split('.')[0];
           const companyIndex = idsCompanies.indexOf(id);
+
+          console.log('click here');
           
           // if exist a ID with equal data in popups then open this else return link
           if (companyIndex !== -1) {  
@@ -72,18 +75,27 @@
             wrapper.appendChild(article);
 
             lightbox.classList.add('is-open');
+
+            setTimeout(function(){
+              preventBodyScrollWhenVisible();
+            },1000)
+
             return false;
           }
+          window.open(href, '_blank').focus();
           return true;
         });
       });
 
-      const closeCompany = lightbox.querySelector('.company__close');
+      const closeCompany = lightbox.querySelector('.lightbox__close');
       closeCompany.addEventListener('click', () => {
         lightbox.classList.remove('is-open');
+        resetBodyPositionWhenNotVisible();
       });
     };
 
-    companiesProcess();
+    const pathname = window.location.pathname;
+    if (pathname.includes('/companies')) companiesProcess();
 
+    // companiesProcess();
 })();
