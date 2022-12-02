@@ -25,11 +25,19 @@
 
       const lightbox = document.createElement('div');
       lightbox.id = 'lightBox';
-      lightbox.appendChild(templateClose.content.cloneNode(true));
       document.body.appendChild(lightbox);
 
       const wrapper = document.createElement('div');
-      wrapper.classList.add('company');
+      wrapper.classList.add('wrapper-content');
+      
+      const content = document.createElement('div');
+      content.classList.add('company');
+      
+      const right = document.createElement('div');
+      right.classList.add('wrapper-right');
+      
+      wrapper.appendChild(right);
+      wrapper.appendChild(content);
       lightbox.appendChild(wrapper);
 
       const companiesGallery = Array.from(document.querySelectorAll('.slide'));
@@ -68,17 +76,21 @@
 
             articleHeader.appendChild(templateHeader.content.cloneNode(true));
 
-            while (wrapper.firstChild) {
-              wrapper.removeChild(wrapper.firstChild)
+            while (content.firstChild) {
+              content.removeChild(content.firstChild)
             }
 
-            wrapper.appendChild(article);
+            content.appendChild(article);
+            content.appendChild(templateClose.content.cloneNode(true));
+            
+            const closeCompany = content.querySelector('.lightbox__close');
+            closeCompany.addEventListener('click', () => {
+              lightbox.classList.remove('is-open');
+              resetBodyPositionWhenNotVisible();
+            });
 
             lightbox.classList.add('is-open');
-
-            setTimeout(function(){
-              preventBodyScrollWhenVisible();
-            },1000)
+            preventBodyScrollWhenVisible();
 
             return false;
           }
@@ -87,11 +99,6 @@
         });
       });
 
-      const closeCompany = lightbox.querySelector('.lightbox__close');
-      closeCompany.addEventListener('click', () => {
-        lightbox.classList.remove('is-open');
-        resetBodyPositionWhenNotVisible();
-      });
     };
 
     const pathname = window.location.pathname;

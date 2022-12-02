@@ -1,1 +1,1 @@
-const preventBodyScrollWhenVisible=()=>{document.body.style.overflow="hidden"},resetBodyPositionWhenNotVisible=()=>{document.body.style.overflow="visible"};
+const preventBodyScrollWhenVisible=()=>{document.body.style.overflow="hidden"},resetBodyPositionWhenNotVisible=()=>{document.body.style.overflow="auto"};

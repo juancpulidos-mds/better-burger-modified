@@ -61,7 +61,7 @@
         transition: all 0.6s cubic-bezier(0.85, 0, 0.15, 1);
         padding: 60px 0 100px 50px;
       }
-  
+
       ::slotted(*) {
         font-family: inherit;
         opacity: 0;
@@ -97,13 +97,12 @@
         letter-spacing: .08em;
         line-height: 1.6rem;
         transition: left 0ms linear 100ms;
-        text-transform: uppercase;
       }
 
       .header-nav-item:active,
       .header-nav-item-active {
         color: #07a8f2;
-        font-weight: 700;
+        font-weight: 600;
         text-decoration: none;
       }
 

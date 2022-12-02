@@ -9,6 +9,7 @@
             <path d="M30.1108 74.3071L25.6914 69.8877L69.8856 25.6935L74.305 30.1129L30.1108 74.3071Z" fill="DimGray"/>
           </svg>
         </div>`;
+      const capitalizeWords = sentence => (sentence.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()));
 
       const elementMemberFormat = (id) => {
         const elementMember = document.getElementById(id).cloneNode(true);
@@ -42,7 +43,7 @@
             <div class="photo"><img src="${picture.getAttribute('src')}"/></div>
             <div>
               <h2>${name.textContent}</h2>
-              <h3>${role.textContent}</h3>
+              <h3>${capitalizeWords(role.textContent)}</h3>
               <div class="social">
                 <p>${last.innerHTML}</p>
                 <a href="${linkedIn.getAttribute('href')}" target="_blank"><img src="${linkedInImg}" alt="${linkedIn.textContent}" class="icon-linked-in" /></a>
@@ -57,11 +58,19 @@
       
       const lightbox = document.createElement('div');
       lightbox.id = 'lightBox';
-      lightbox.appendChild(templateClose.content.cloneNode(true));
       document.body.appendChild(lightbox);
 
       const wrapper = document.createElement('div');
-      wrapper.classList.add('about');
+      wrapper.classList.add('wrapper-content');
+
+      const content = document.createElement('div');
+      content.classList.add('about');
+
+      const right = document.createElement('div');
+      right.classList.add('wrapper-right');
+
+      wrapper.appendChild(right);
+      wrapper.appendChild(content);
       lightbox.appendChild(wrapper);
 
       const team = Array.from(document.querySelector('.sqs-layout').querySelectorAll('.row.sqs-row'));
@@ -98,26 +107,24 @@
 
           templateContent.innerHTML = elementMemberFormat(id);
 
-          while (wrapper.firstChild) {
-            wrapper.removeChild(wrapper.firstChild)
+          while (content.firstChild) {
+            content.removeChild(content.firstChild)
           }
 
-          wrapper.appendChild(templateContent.content.cloneNode(true));
+          content.appendChild(templateContent.content.cloneNode(true));
+          content.appendChild(templateClose.content.cloneNode(true));
+
+          const closeCompany = content.querySelector('.lightbox__close');
+          closeCompany.addEventListener('click', () => {
+            lightbox.classList.remove('is-open');
+            resetBodyPositionWhenNotVisible();
+          });
 
           lightbox.classList.add('is-open');
-
-          setTimeout(function(){
-            preventBodyScrollWhenVisible();
-          },1000)
+          preventBodyScrollWhenVisible();
 
           return false;
         });
-      });
-
-      const closeCompany = lightbox.querySelector('.lightbox__close');
-      closeCompany.addEventListener('click', () => {
-        lightbox.classList.remove('is-open');
-        resetBodyPositionWhenNotVisible();
       });
     };
       
